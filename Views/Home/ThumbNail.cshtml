@@ -1,0 +1,42 @@
+@{
+    Layout = null; 
+    ViewBag.Title = "Welcome!";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Sử dụng CDN để đảm bảo Bootstrap hoạt động -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>   
+</head>
+<body class="bg-primary">
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <!-- Cột nội dung chính -->
+            <div class="col-7 d-flex justify-content-center align-items-center">
+                <div class="container">
+                    <div class="col-md-7 mx-auto p-3">
+                        <h1 class="text-white" style="font-size: 70px;">eCommerce Website Design Template</h1>
+                        <button class="btn btn-light btn-lg" style="font-size: 35px;" onclick="redirectToHome()">Click Here!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột bên phải chứa ảnh -->
+            <div class="col-5 d-flex justify-content-end ">
+                <img src="~/images/Phone_bg.jpg" alt="Back_ground" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function redirectToHome() {
+            window.location.href = '@Url.Action("Index", "Home")';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+@model IEnumerable<TechStore.Models.Promotion>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Web.Common
+@{
+    ViewData["Title"] = "Quản lý Khuyến Mãi";
+    Layout = "_NavbarManager";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-primary">LIST PROMOTION</h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Create
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm rounded">
+            <thead class="table-info">
+                <tr class="text-center">
+                    <th class="col-2">Name</th>
+                    <th class="col-2">Discount (%)</th>
+                    <th class="col-2">Start Date</th>
+                    <th class="col-2">End Date</th>
+                    <th class="col-2">Description</th>
+                    <th class="col-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="align-middle">
+                        <td class="text-center " >@item.Name</td>
+                        <td class="text-center ">@item.DiscountPercent %</td>
+                        <td class="text-center ">@item.StartDate.ToShortDateString()</td>
+                        <td class="text-center ">@item.EndDate.ToShortDateString()</td>
+                        <td class="text-center description-column">@Html.Raw(item.Description)</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@item.PromotionID" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.PromotionID" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="d-flex justify-content-center mt-4">
+    @Html.PagedListPager(Model.ToPagedList(1, 10), page => Url.Action("Index", new { page }),
+        new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+            MaximumPageNumbersToDisplay = 5,
+            UlElementClasses = new[] { "pagination" },
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" }
+        })
+</div>

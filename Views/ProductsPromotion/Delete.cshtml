@@ -1,0 +1,19 @@
+@model TechStore.Models.ProductsPromotion
+@{
+    ViewData["Title"] = "Xóa Sản phẩm Khuyến mãi";
+    Layout = "_NavbarManager";
+}
+
+<h2 class="text-danger">Xóa Sản phẩm khỏi Khuyến mãi</h2>
+
+<h4>Bạn có chắc chắn muốn xóa?</h4>
+<div>
+    <p><strong>Sản phẩm:</strong> @Model.Product.Name</p>
+    <p><strong>Khuyến mãi:</strong> @Model.Promotion.Name (@Model.Promotion.DiscountPercent%)</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="ProductPromotionID" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

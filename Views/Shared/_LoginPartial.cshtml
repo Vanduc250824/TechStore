@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <!-- Search -->
+    <button id="showLayoutNavbarBtn" class="btn btn-link ms-auto">
+        <img src="~/Images/close.png" alt="Search" width="20" height="20">
+    </button>
+    
+    <!-- Shopping cart -->
+    <a href="@Url.Action("Cart", "Shopping")" class="position-relative">
+        <img src="~/Images/shopping-cart.png" alt="Shopping Cart" />
+    </a>
+    <ul class="navbar-nav d-flex flex-row align-items-center">
+        <li class="nav-item d-flex flex-row align-items-center">
+            <a class="nav-link" asp-controller="Manage" asp-action="Index">
+                <img src="~/Images/Image_Default.png" alt="Logo" class="rounded-circle" style="width: 32px; height: 32px;">
+            </a>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav d-flex flex-row">
+        <li class="nav-item mx-2"><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li class="nav-item mx-2"><a class="nav-link" asp-controller="Account" asp-action="Login">Log in</a></li>
+    </ul>
+}

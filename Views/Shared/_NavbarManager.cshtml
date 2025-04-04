@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+</head>
+
+<body>
+    <partial name="_LayoutTopHeader" />
+    <nav class="navbar navbar-expand-sm bg-white border-5 shadow-lg text-dark">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <a href="@Url.Action("Index", "Account")" class="navbar-brand">
+                    <img src="~/Images/Logo.png" alt="Account" />
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    title="Toggle navigation" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav text-start">
+                        <li class="fw-bold">@Html.ActionLink("Account", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="fw-bold">@Html.ActionLink("Products", "Index", "Products", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="fw-bold">@Html.ActionLink("Promotions", "Index", "Promotions", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fw-bold">
+                <partial name="_LoginPartial" />
+            </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <partial name="_LayoutFooter" />
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

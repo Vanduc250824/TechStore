@@ -1,0 +1,46 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-light">
+    <!-- Logo -->
+    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+        <img src="~/Images/Logo.png" alt="Account" />
+    </a>
+
+    <!-- Toggle button for small screens -->
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        title="Toggle navigation" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex ms-auto position-relative" style="width: 1000px;">
+            <input type="text" class="form-control px-4 py-2 rounded-pill bg-info-subtle pe-5" placeholder="Search entire store here..."
+                style="width:100%;">
+            <img src="~/Images/search.png" alt="Search" width="20" height="20"
+                style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+        </form>
+    </div>
+
+    <div class="d-flex align-items-center gap-3" style="margin-left: 100px;">
+        <!-- Avatar -->
+        <partial name="_LoginPartial" />
+    </div>
+</nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.form-control');
+        const renderBody = document.querySelector('main');
+        const footer = document.querySelector('footer');
+
+        searchInput.addEventListener('focus', function () {
+            if (renderBody) renderBody.style.opacity = '0.5';
+            if (footer) footer.style.opacity = '0.5';
+        });
+
+        searchInput.addEventListener('blur', function () {
+            if (renderBody) renderBody.style.opacity = '1';
+            if (footer) footer.style.opacity = '1';
+        });
+    });
+</script>

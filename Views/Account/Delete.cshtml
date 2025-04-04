@@ -1,0 +1,9 @@
+@model ApplicationUser 
+@{
+    Layout ="_NavbarManager";
+}
+<td>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+    </form>
+</td>

@@ -1,0 +1,95 @@
+@model TechStore.Models.Product
+@{
+    Layout = "_NavbarManager";
+}
+
+<div class="container mt-4 py-3">
+    <h2 class="text-center mb-4">Chỉnh Sửa Sản Phẩm</h2>
+
+    @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation" }))
+    {
+        @Html.HiddenFor(m => m.ProductID)
+
+        <!-- Hiển thị lỗi nếu ModelState không hợp lệ -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="row">
+            <!-- Cột trái -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Name, new { @class = "form-label fw-bold" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.CategoryID, "Chọn danh mục", new { @class = "form-label fw-bold" })
+                    @if (ViewData["CategoryID"] is SelectList categoryList)
+                    {
+                        @Html.DropDownListFor(m => m.CategoryID, categoryList, "-- Chọn danh mục --", new { @class = "form-select", required = "required" })
+                    }
+                    else
+                    {
+                        <select class="form-select" disabled>
+                            <option>❌ Không có danh mục</option>
+                        </select>
+                    }
+                </div>
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.ProductType, new { @class = "form-label fw-bold" })
+                    @Html.TextBoxFor(m => m.ProductType, new { @class = "form-control", required = "required" })
+                </div>
+                
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.OriginalPrice, new { @class = "form-label fw-bold" })
+                    <input type="number" name="OriginalPrice" value="@Model.OriginalPrice" class="form-control" step="0.01" required />
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.DiscountedPrice, new { @class = "form-label fw-bold" })
+                    <input type="number" name="DiscountedPrice" value="@Model.DiscountedPrice" class="form-control" step="0.01" required />
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.StockQuantity, new { @class = "form-label fw-bold" })
+                    <input type="number" name="StockQuantity" value="@Model.StockQuantity" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Cột phải -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.ImageFile, new { @class = "form-label fw-bold" })
+                    <input type="file" name="ImageFile" class="form-control" />
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="img-thumbnail mt-2" width="100" height="100" />
+                    }
+                </div>
+
+                <div class="form-group mb-3">
+                    @Html.LabelFor(m => m.Description, new { @class = "form-label fw-bold" })
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", id = "DescriptionID", rows = 5 })
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success btn-lg me-2">
+                <i class="fa fa-save"></i> Lưu Thay Đổi
+            </button>
+            <a href="@Url.Action("Index", "Products")" class="btn btn-secondary btn-lg">Hủy</a>
+        </div>
+    }
+
+    @Html.Partial("_CKEditor")
+</div>
