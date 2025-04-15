@@ -1,0 +1,35 @@
+@model Product
+<div class="card">
+    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name">
+    <div class="card-body">
+        <!-- Trạng thái tồn kho -->
+        <p class="card-text stock-status">
+            @if (Model.StockQuantity > 0)
+            {
+                <img src="@Url.Content("~/Images/In_stock.png")" alt="Còn hàng" width="71" height="26" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Images/Check_Available.png")" alt="Hết hàng" width="24" />
+            }
+        </p>
+
+        <!-- Tên sản phẩm -->
+        <h5 class="card-title">@Model.Name</h5>
+        <!-- Hiển thị giá -->
+        @if (Model.DiscountedPrice == null || Model.DiscountedPrice == Model.OriginalPrice)
+        {
+            <!-- Không có khuyến mãi: chỉ hiển thị giá bình thường -->
+            <p class="card-text price"><strong>@Model.OriginalPrice.ToString("C")</strong></p>
+        }
+        else
+        {
+            <!-- Có khuyến mãi: hiển thị giá bình thường gạch ngang và giá khuyến mãi -->
+            <p class="card-text price">
+                <span class="original-price">@Model.OriginalPrice.ToString("C")</span>
+                <br />
+                <strong class="discounted-price">@Model.DiscountedPrice.ToString("C")</strong>
+            </p>
+        }
+    </div>
+</div>

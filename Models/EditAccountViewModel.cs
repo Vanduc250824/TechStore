@@ -8,6 +8,7 @@ public class EditAccountViewModel
     public string FullName { get; set; }
     public string Address { get; set; }
 
+    public IFormFile? ProfilePictureFile { get; set; }
     public List<string> AvailableRoles { get; set; } // Danh sách vai trò có sẵn
     public string SelectedRole { get; set; } // Vai trò được chọn
 }

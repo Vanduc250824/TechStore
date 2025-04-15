@@ -9,10 +9,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
     }
-    
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
     public DbSet<ProductsPromotion> ProductPromotions { get; set; }
+
 }

@@ -2,29 +2,70 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <!-- Search -->
-    <button id="showLayoutNavbarBtn" class="btn btn-link ms-auto">
-        <img src="~/Images/close.png" alt="Search" width="20" height="20">
-    </button>
-    
-    <!-- Shopping cart -->
-    <a href="@Url.Action("Cart", "Shopping")" class="position-relative">
-        <img src="~/Images/shopping-cart.png" alt="Shopping Cart" />
-    </a>
-    <ul class="navbar-nav d-flex flex-row align-items-center">
-        <li class="nav-item d-flex flex-row align-items-center">
-            <a class="nav-link" asp-controller="Manage" asp-action="Index">
-                <img src="~/Images/Image_Default.png" alt="Logo" class="rounded-circle" style="width: 32px; height: 32px;">
+@{
+    string avatarUrl = Url.Content("~/Images/Avatars/Image_Default.png"); // mặc định
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        if (user != null && !string.IsNullOrEmpty(user.ProfilePicture))
+        {
+            avatarUrl = Url.Content(user.ProfilePicture);
+        }
+    }
+}
+
+<div class="d-flex align-items-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <!-- Nút Search -->
+        <button id="btnShowSearchBar" class="btn btn-link p-1 me-2">
+            <img src="~/Images/search.png" alt="Search" width="20" height="20" />
+        </button>
+
+        <!-- Nút Close -->
+        <button id="btnCloseSearchBar" class="btn btn-link p-1 d-none me-2">
+            <img src="~/Images/close.png" alt="Close" width="20" height="20" />
+        </button>
+
+        <!-- Giỏ hàng -->
+        <a href="@Url.Action("Cart", "Shopping")" class="position-relative mx-2">
+            <img src="~/Images/shopping-cart.png" alt="Cart" width="24" height="24" />
+        </a>
+
+        <!-- Avatar + Logout -->
+        <div class="dropdown d-flex align-items-center mx-2">
+            <a class="nav-link p-1 dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="@avatarUrl" alt="User" class="rounded-circle" style="width: 32px; height: 32px;" />
             </a>
-        </li>
-    </ul>
-}
-else
-{
-    <ul class="navbar-nav d-flex flex-row">
-        <li class="nav-item mx-2"><a class="nav-link" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li class="nav-item mx-2"><a class="nav-link" asp-controller="Account" asp-action="Login">Log in</a></li>
-    </ul>
-}
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="/Manage/Index">My Account</a></li>
+                <li>
+                    <a class="dropdown-item" href="/Wishlist">My Wish List</a>
+                    <span></span>
+                </li>
+                <li><a class="dropdown-item" href="/Compare">Compare (0)</a></li>
+                <li>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="dropdown-item text-start w-100">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    }
+    else
+    {
+        <!-- Nếu chưa đăng nhập -->
+        <ul class="navbar-nav d-flex flex-row align-items-center mb-0">
+            <li class="nav-item mx-2">
+                <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+            </li>
+            <li class="nav-item mx-2">
+                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+            </li>
+        </ul>
+    }
+</div>

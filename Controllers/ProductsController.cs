@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Ganss.Xss;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace TechStore.Controllers
@@ -26,8 +27,34 @@ namespace TechStore.Controllers
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+        //Product
+        public IActionResult Laptops()
+        {
+            return View();
+        }
+        public IActionResult DesktopPCs()
+        {
+            return View();
+        }
+        public IActionResult NetworkingDevices()
+        {
+            return View();
+        }
+        public IActionResult PrinterScanner()
+        {
+            return View();
+        }
+        public IActionResult PCParts()
+        {
+            return View();
+        }
+        public IActionResult AllOtherProducts()
+        {
+            return View();
+        }
 
         //Index
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(int? page)
         {
             int pageSize = 5;
@@ -153,7 +180,6 @@ namespace TechStore.Controllers
             // Cập nhật thông tin sản phẩm
             existingProduct.Name = model.Name;
             existingProduct.CategoryID = model.CategoryID;
-            existingProduct.ProductType = model.ProductType;
             existingProduct.OriginalPrice = model.DiscountedPrice;
             existingProduct.DiscountedPrice = model.DiscountedPrice;
             existingProduct.StockQuantity = model.StockQuantity;
