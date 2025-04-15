@@ -548,7 +548,6 @@ D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\vffaow6het-v8teyk34rk.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\p4q2sqgkhy-9l6pg925xq.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\yub7h33fvl-owgy76zcxb.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\nap0aq3oyr-hlg5i3psji.gz
-D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\rw8m71j0lg-xtxxf3hu2r.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\liss77p5go-bqjiyaj88i.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\n65o3j87pm-c2jlpeoesf.gz
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\de823qpqxu-erw9l3u2r3.gz
@@ -627,8 +626,10 @@ D:\Coders\HTML\TechStore\obj\Debug\net9.0\TechStore.pdb
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\TechStore.genruntimeconfig.cache
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\ref\TechStore.dll
 D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\72u2mej4v9-397584kkqu.gz
-D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\aokwnxyubc-y5psz9arv9.gz
 D:\Coders\HTML\TechStore\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\Coders\HTML\TechStore\bin\Debug\net9.0\Newtonsoft.Json.dll
 D:\Coders\HTML\TechStore\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
 D:\Coders\HTML\TechStore\bin\Debug\net9.0\X.PagedList.Web.Common.dll
+D:\Coders\HTML\TechStore\obj\Debug\net9.0\TechStore.sourcelink.json
+D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\rw8m71j0lg-mk3hpxfwth.gz
+D:\Coders\HTML\TechStore\obj\Debug\net9.0\compressed\aokwnxyubc-0b7odrrmqb.gz

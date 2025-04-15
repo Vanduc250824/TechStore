@@ -82,46 +82,28 @@ public class AccountController : Controller
                 Email = model.Email,
                 PhoneNumber = model.Phone,
                 FullName = model.FullName,
-                Address = model.Address
+                Address = model.Address,
+                ProfilePicture = "~/Images/Avatars/Image_Default.png"            
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                // Kiểm tra xem user có trong database chưa
-                var checkUser = await _userManager.FindByNameAsync(model.Username);
-
-                if (checkUser == null)
-                {
-                    ModelState.AddModelError("", "Lỗi: Tài khoản chưa được lưu vào DB!");
-                    return View(model);
-                }
-
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 await _userManager.AddToRoleAsync(user, "User");
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return View(model);
-            }
 
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
 
         return View(model);
     }
+
 
     // Đăng xuất
     public async Task<IActionResult> Logout()

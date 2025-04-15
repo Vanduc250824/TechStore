@@ -28,7 +28,6 @@
                 <th class="text-center">OriginalPrice</th>
                 <th class="text-center">DiscountedPrice</th>
                 <th class="text-center">Category</th>
-                <th class="text-center">Product Type</th>
                 <th class="text-center">Stock</th>
                 <th class="text-center">Image</th>
                 <th class="text-center">Description</th>
@@ -43,7 +42,6 @@
                     <td class="text-center">$ @item.OriginalPrice.ToString("N0")</td>
                     <td class="text-center">$ @item.DiscountedPrice.ToString("N0")</td>
                     <td class="text-center">@item.Category.Name</td>
-                    <td class="text-center">@item.ProductType</td>
                     <td class="text-center">@item.StockQuantity</td>
                     <td class="text-center">
                         @if (!string.IsNullOrEmpty(item.ImageUrl))

@@ -13,8 +13,32 @@
       "PackagePath": "staticwebassets\\Images\\Avatar.png"
     },
     {
-      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Image_Default.png",
-      "PackagePath": "staticwebassets\\Images\\Image_Default.png"
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Avatars\\319eb439-0b0f-49e4-a795-6614c123ffe0.png",
+      "PackagePath": "staticwebassets\\Images\\Avatars\\319eb439-0b0f-49e4-a795-6614c123ffe0.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Avatars\\50efcbf5-5172-4ce9-a99f-0fc81d16d814.jpg",
+      "PackagePath": "staticwebassets\\Images\\Avatars\\50efcbf5-5172-4ce9-a99f-0fc81d16d814.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Avatars\\98e648b4-882b-4c47-ab39-85f15382a18a.png",
+      "PackagePath": "staticwebassets\\Images\\Avatars\\98e648b4-882b-4c47-ab39-85f15382a18a.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Avatars\\Image_Default.png",
+      "PackagePath": "staticwebassets\\Images\\Avatars\\Image_Default.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Avatars\\dfdd6b31-1ce4-4a9d-ac82-c6e69f7af9ec.jpg",
+      "PackagePath": "staticwebassets\\Images\\Avatars\\dfdd6b31-1ce4-4a9d-ac82-c6e69f7af9ec.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Check_Available.png",
+      "PackagePath": "staticwebassets\\Images\\Check_Available.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\In_stock.png",
+      "PackagePath": "staticwebassets\\Images\\In_stock.png"
     },
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Logo.png",
@@ -23,6 +47,130 @@
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Phone_bg.jpg",
       "PackagePath": "staticwebassets\\Images\\Phone_bg.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\1b5a4171-9a58-4d65-9f4b-d1d351e2a5ae.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\1b5a4171-9a58-4d65-9f4b-d1d351e2a5ae.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\248e9565-2d8d-41a4-994f-a9e627fec9e7.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\248e9565-2d8d-41a4-994f-a9e627fec9e7.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\2dd20366-894f-4025-94ce-3b61867602cf.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\2dd20366-894f-4025-94ce-3b61867602cf.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\3222bd01-1462-4e03-992d-b2513e35296a.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\3222bd01-1462-4e03-992d-b2513e35296a.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\33dab8df-d3f6-4c85-a914-fb8e498defa9.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\33dab8df-d3f6-4c85-a914-fb8e498defa9.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\394e69a7-6c5d-466b-83a6-46f8a1ce6e36.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\394e69a7-6c5d-466b-83a6-46f8a1ce6e36.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\3b61d08c-221a-4fb8-ac39-c5303f5b2bf9.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\3b61d08c-221a-4fb8-ac39-c5303f5b2bf9.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\499aa984-46f3-41ee-b9a9-26d636795e9f.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\499aa984-46f3-41ee-b9a9-26d636795e9f.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\53dfb580-0341-4eee-a534-9d74874601b8.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\53dfb580-0341-4eee-a534-9d74874601b8.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\5dd9b12a-c634-4216-8774-1b03da6c08d2.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\5dd9b12a-c634-4216-8774-1b03da6c08d2.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\68573dbb-e176-4afd-ad82-38542d1c92ca.webp",
+      "PackagePath": "staticwebassets\\Images\\Products\\68573dbb-e176-4afd-ad82-38542d1c92ca.webp"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\74c0191d-5af6-4e74-9b9e-1756e8e98089.png",
+      "PackagePath": "staticwebassets\\Images\\Products\\74c0191d-5af6-4e74-9b9e-1756e8e98089.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\7a64da40-0b9c-45a9-913e-18d1e7d69899.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\7a64da40-0b9c-45a9-913e-18d1e7d69899.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\7dd493cf-5ba6-46e2-9aa9-084caf075341.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\7dd493cf-5ba6-46e2-9aa9-084caf075341.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\7f40424c-b22d-4da0-b207-46c463f7870c.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\7f40424c-b22d-4da0-b207-46c463f7870c.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\8cb13e3c-64a0-4ac6-8f85-91becd593c71.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\8cb13e3c-64a0-4ac6-8f85-91becd593c71.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\9197c791-e397-44ea-8865-edfaebdde6c5.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\9197c791-e397-44ea-8865-edfaebdde6c5.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\947ba4eb-03e3-438a-af75-1329f42f482e.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\947ba4eb-03e3-438a-af75-1329f42f482e.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\97c78747-80a6-49b8-bc2c-2d237cd4d151.webp",
+      "PackagePath": "staticwebassets\\Images\\Products\\97c78747-80a6-49b8-bc2c-2d237cd4d151.webp"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\9aca8c0a-9bf7-430a-ba44-cc9797d73855.png",
+      "PackagePath": "staticwebassets\\Images\\Products\\9aca8c0a-9bf7-430a-ba44-cc9797d73855.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\a1b636df-e897-4a8b-81fe-26107843ab40.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\a1b636df-e897-4a8b-81fe-26107843ab40.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\a43b74b8-a297-4a64-95b9-c842da61c4f0.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\a43b74b8-a297-4a64-95b9-c842da61c4f0.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\b618f23d-9952-44d8-a070-349184ac83a8.webp",
+      "PackagePath": "staticwebassets\\Images\\Products\\b618f23d-9952-44d8-a070-349184ac83a8.webp"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\bb1e4dc0-d42f-4bd4-91ec-48339c4e4b3c.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\bb1e4dc0-d42f-4bd4-91ec-48339c4e4b3c.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\bceb68b8-8810-4bb8-819e-ad0855516d33.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\bceb68b8-8810-4bb8-819e-ad0855516d33.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\c146de60-01af-4000-81bf-3020a00c7c6b.png",
+      "PackagePath": "staticwebassets\\Images\\Products\\c146de60-01af-4000-81bf-3020a00c7c6b.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\c312b5ef-9c23-45a2-a6fc-f4c40b36b722.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\c312b5ef-9c23-45a2-a6fc-f4c40b36b722.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\c4432229-2733-4553-933b-48e6fc7846e6.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\c4432229-2733-4553-933b-48e6fc7846e6.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\cfbc1adc-68c6-475d-bb7c-e4c7b9320cb7.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\cfbc1adc-68c6-475d-bb7c-e4c7b9320cb7.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\d46c3781-8fc5-43e7-9811-0fc419c528a5.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\d46c3781-8fc5-43e7-9811-0fc419c528a5.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Products\\ea36a233-816c-49ac-8f81-e7640238ef67.jpg",
+      "PackagePath": "staticwebassets\\Images\\Products\\ea36a233-816c-49ac-8f81-e7640238ef67.jpg"
     },
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\Saving.png",
@@ -39,6 +187,10 @@
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\close.png",
       "PackagePath": "staticwebassets\\Images\\close.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\desktop_pcs_background.png",
+      "PackagePath": "staticwebassets\\Images\\desktop_pcs_background.png"
     },
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\discover.png",
@@ -65,12 +217,32 @@
       "PackagePath": "staticwebassets\\Images\\instagram_icons2.png"
     },
     {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\laptops_background.png",
+      "PackagePath": "staticwebassets\\Images\\laptops_background.png"
+    },
+    {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\maestro.png",
       "PackagePath": "staticwebassets\\Images\\maestro.png"
     },
     {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\networking_devices_background.jpg",
+      "PackagePath": "staticwebassets\\Images\\networking_devices_background.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\other_products_background.jpg",
+      "PackagePath": "staticwebassets\\Images\\other_products_background.jpg"
+    },
+    {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\paypal.png",
       "PackagePath": "staticwebassets\\Images\\paypal.png"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\pc_parts_background.jpg",
+      "PackagePath": "staticwebassets\\Images\\pc_parts_background.jpg"
+    },
+    {
+      "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\printers_scanners_background.jpg",
+      "PackagePath": "staticwebassets\\Images\\printers_scanners_background.jpg"
     },
     {
       "Id": "D:\\Coders\\HTML\\TechStore\\wwwroot\\Images\\search.png",

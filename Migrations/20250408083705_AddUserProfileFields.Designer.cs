@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TechStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250403033314_AddPictureProfileToUser")]
-    partial class AddPictureProfileToUser
+    [Migration("20250408083705_AddUserProfileFields")]
+    partial class AddUserProfileFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,6 @@ namespace TechStore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePicture")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
@@ -280,10 +279,6 @@ namespace TechStore.Migrations
                     b.Property<decimal>("OriginalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProductType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
 
@@ -402,7 +397,7 @@ namespace TechStore.Migrations
             modelBuilder.Entity("TechStore.Models.Product", b =>
                 {
                     b.HasOne("TechStore.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -427,6 +422,11 @@ namespace TechStore.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Promotion");
+                });
+
+            modelBuilder.Entity("TechStore.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

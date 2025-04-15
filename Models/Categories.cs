@@ -9,5 +9,7 @@ namespace TechStore.Models
 
         [Required]
         public required string Name { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }

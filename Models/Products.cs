@@ -13,10 +13,8 @@ namespace TechStore.Models
 
         [Required(ErrorMessage = "Danh mục không được để trống.")]
         public int CategoryID { get; set; }
-        public virtual Category Category { get; set; }
 
-        [Required(ErrorMessage = "Dạng sản phẩm không được để trống.")]
-        public required string ProductType { get; set; }
+        public virtual Category Category { get; set; }
 
         [Required(ErrorMessage = "Giá không được để trống.")]
         public decimal OriginalPrice { get; set; }
@@ -36,5 +34,7 @@ namespace TechStore.Models
 
         [NotMapped] // Không lưu vào database
         public required IFormFile ImageFile { get; set; }
+
+
     }
 }

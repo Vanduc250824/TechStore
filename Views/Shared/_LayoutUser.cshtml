@@ -6,24 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/site.css" asp-append-version="true" />
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 </head>
+
 <body>
-    <partial name="_LayoutTopHeader" />
-    <nav class="navbar navbar-expand-sm bg-white border-5 shadow-lg text-dark">
-        <div class="container">
-            <div class="d-flex justify-content-between">
-               <partial name="_SearchBar" />
-            </div>
+
+    @await Html.PartialAsync("_LayoutTopHeader")
+
+    <div class="bg-white d-flex flex-row align-items-center px-2 py-2 w-100 border-bottom border-2">
+        <!-- Logo -->
+        <div class="me-3">
+            <a href="@Url.Action("Index", "Home")">
+                <img src="~/Images/Logo.png" alt="Logo" style="height: 40px;">
+            </a>
         </div>
-    </nav>
+
+        <!-- Product Menu (moved from _ListProduct to _LayoutUser if applicable) -->
+        <!-- Product Menu -->
+        <div class="d-flex flex-row flex-nowrap justify-content-start overflow-auto w-75 px-2 " id="navbarList">
+            @await Html.PartialAsync("_ListProduct")
+        </div>
+
+        <!-- Search Bar -->
+        <div class="ms-3 d-none px-3" id="navbarSearch">
+            @await Html.PartialAsync("_SearchBar")
+        </div>
+
+
+        <!-- Login/User Info -->
+        <div class="ms-5 ps-5">
+            @await Html.PartialAsync("_LoginPartial")
+        </div>
+    </div>
+
     <div class="container body-content">
         @RenderBody()
-        
-
     </div>
-    <partial name="_LayoutFooter" />
-    @RenderSection("scripts", required: false)
+
+    @await Html.PartialAsync("_LayoutFooter")
+
+    <!-- Place JS at the end of the body tag -->
+    <script src="~/js/site.js" type="text/javascript" defer></script>
+
 </body>
 
 </html>

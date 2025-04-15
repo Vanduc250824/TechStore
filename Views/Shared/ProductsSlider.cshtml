@@ -1,0 +1,32 @@
+@model IEnumerable<TechStore.Models.Product>
+
+<div id="productSlider" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @{
+            var chunkSize = 4;
+            var productChunks = Model.Select((product, index) => new { product, index })
+                                     .GroupBy(x => x.index / chunkSize)
+                                     .Select(g => g.Select(x => x.product).ToList())
+                                     .ToList();
+
+            for (int i = 0; i < productChunks.Count; i++)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="row">
+                        @foreach (var product in productChunks[i])
+                        {
+                            <partial name="CardProducts" model="product" />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#productSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#productSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
