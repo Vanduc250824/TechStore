@@ -1,0 +1,110 @@
+@model X.PagedList.IPagedList<TechStore.Models.WishlistItem>
+@using X.PagedList.Mvc.Core
+@using TechStore.Models
+@using X.PagedList
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Web.Common
+@{
+    ViewData["Title"] = "My Wishlist";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4">My Wishlist</h1>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-heart fa-4x text-muted mb-3"></i>
+            <h3>Your wishlist is empty</h3>
+            <p class="text-muted">Add some products to your wishlist to keep track of items you love!</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">
+                <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 product-card">
+                        @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                        {
+                            <img src="@item.Product.ImageUrl" class="card-img-top" alt="@item.Product.Name">
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                                style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Product?.Name</h5>
+                            <p class="card-text">
+                                @if (item.Product?.DiscountedPrice > 0 && item.Product.DiscountedPrice <
+                                                        item.Product.OriginalPrice)
+                                {
+                                    <span class="text-danger">@item.Product.DiscountedPrice?.ToString("C") ?? "N/A"</span>
+                                    <span
+                                        class="text-muted text-decoration-line-through ms-2">@item.Product.OriginalPrice.ToString("C")</span>
+                                }
+                                else
+                                {
+                                    <span>@item.Product?.OriginalPrice.ToString("C")</span>
+                                }
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="@Url.Action("Details", "Home", new { area = "User",id = item.ProductID })"
+                                    class="btn btn-outline-primary">
+                                    <i class="fas fa-eye me-2"></i>View Details
+                                </a>
+                                <form asp-action="RemoveFromWishlist" method="post" class="d-inline">
+                                    <input type="hidden" name="productId" value="@item.ProductID" />
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="fas fa-heart-broken"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+                MaximumPageNumbersToDisplay = 5,
+                UlElementClasses = new[] { "pagination" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+            })
+    </div>
+        }
+</div>
+
+@section Styles {
+    <style>
+        .product-card {
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+}

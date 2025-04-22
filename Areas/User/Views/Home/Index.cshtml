@@ -1,0 +1,110 @@
+﻿@model IEnumerable<TechStore.Models.Category>
+@{
+    ViewData["Title"] = "Home";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Hero Slider Section -->
+<div id="homeSlider" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#homeSlider" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#homeSlider" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#homeSlider" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner rounded-4 overflow-hidden">
+        <div class="carousel-item active">
+            <img src="@Url.Content("~/Images/slider1.png")" class="d-block w-100" alt="Slider 1">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Khám phá công nghệ mới</h2>
+                <p>Trải nghiệm những sản phẩm công nghệ hàng đầu</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="@Url.Content("~/Images/slider2.png")" class="d-block w-100" alt="Slider 2">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Ưu đãi đặc biệt</h2>
+                <p>Giảm giá lên đến 50% cho các sản phẩm chọn lọc</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="@Url.Content("~/Images/slider3.jpg")" class="d-block w-100" alt="Slider 3">
+            <div class="carousel-caption d-none d-md-block">
+                <h2>Bảo hành chính hãng</h2>
+                <p>Cam kết chất lượng và dịch vụ hậu mãi tốt nhất</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#homeSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#homeSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- New Products Section -->
+@{
+    var newProducts = Model.SelectMany(c => c.Products)
+                          .Take(8)
+                          .ToList();
+}
+<partial name="_ProductSlider" model="newProducts" />
+
+<!-- Categories Section -->
+<div class="container mb-5">
+    
+    <div class="row g-4">
+    <img src="~/Images/Zip.png" alt="">
+        @foreach (var category in Model)
+        {
+            if (category.Products != null && category.Products.Any())
+            {
+                string imageFile = category.CategoryID switch
+                {
+                    1 => "laptops_background.png",
+                    2 => "desktop_pcs_background.png",
+                    3 => "networking_devices_background.jpg",
+                    4 => "printers_scanners_background.jpg",
+                    5 => "pc_parts_background.jpg",
+                    6 => "other_products_background.jpg"
+                };
+                string imagePath = Url.Content($"~/Images/{imageFile}");
+                <div class="col-12">
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="category-thumbnail h-100 position-relative" style="background-image: url('@imagePath'); background-size: cover; background-position: center; min-height: 200px; border-radius: 10px;">
+                                <div class="position-absolute top-50 start-50 translate-middle text-center w-100">
+                                    <h3 class="text-white">@category.Name</h3>
+                                </div>
+                                @if (category.Products.Count() > 4)
+                                {
+                                    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3 w-100 text-center">
+                                        <a asp-controller="Products" asp-action="Category" asp-route-id="@category.CategoryID" 
+                                           class="text-white text-decoration-underline">
+                                            See All Products
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row g-4">
+                                @foreach (var product in category.Products.Take(4))
+                                {
+                                    <partial name="_CardProductWithCart" model="product" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

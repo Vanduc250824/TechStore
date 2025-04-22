@@ -28,7 +28,7 @@
             <p class="card-text price">
                 <span class="original-price">@Model.OriginalPrice.ToString("C")</span>
                 <br />
-                <strong class="discounted-price">@Model.DiscountedPrice.ToString("C")</strong>
+                <strong class="discounted-price">@Model.DiscountedPrice?.ToString("C")</strong>
             </p>
         }
     </div>

@@ -1,0 +1,86 @@
+@model dynamic
+
+<div class="filters-section">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Filters</h5>
+        <a href="#" class="text-primary small" onclick="clearAllFilters()">Clear All</a>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="filter-group mb-4">
+        <h6 class="filter-title">Category</h6>
+        <div class="list-group">
+            @foreach (var category in ViewBag.Categories ?? new string[] {})
+            {
+                <label class="list-group-item border-0 p-0">
+                    <input type="checkbox" class="form-check-input me-2" name="category" value="@category.CategoryID">
+                    @category.Name
+                </label>
+            }
+        </div>
+    </div>
+
+    <!-- Price Range Filter -->
+    <div class="filter-group mb-4">
+        <h6 class="filter-title">Price</h6>
+        <div class="list-group">
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="price" value="0-1000000">
+                $0.00 - $1,000.00
+            </label>
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="price" value="1000000-2000000">
+                $1,000.00 - $2,000.00
+            </label>
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="price" value="2000000-5000000">
+                $2,000.00 - $5,000.00
+            </label>
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="price" value="5000000-">
+                $5,000.00 And Above
+            </label>
+        </div>
+    </div>
+
+    <!-- Color Filter -->
+    <div class="filter-group mb-4">
+        <h6 class="filter-title">Color</h6>
+        <div class="d-flex flex-wrap gap-2">
+            <div class="color-option">
+                <input type="checkbox" class="btn-check" name="color" value="black" id="black">
+                <label class="btn btn-outline-dark rounded-circle p-2" for="black"></label>
+            </div>
+            <div class="color-option">
+                <input type="checkbox" class="btn-check" name="color" value="silver" id="silver">
+                <label class="btn btn-outline-secondary rounded-circle p-2" for="silver"></label>
+            </div>
+            <div class="color-option">
+                <input type="checkbox" class="btn-check" name="color" value="gold" id="gold">
+                <label class="btn btn-outline-warning rounded-circle p-2" for="gold"></label>
+            </div>
+            <div class="color-option">
+                <input type="checkbox" class="btn-check" name="color" value="blue" id="blue">
+                <label class="btn btn-outline-primary rounded-circle p-2" for="blue"></label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Status Filter -->
+    <div class="filter-group mb-4">
+        <h6 class="filter-title">Stock Status</h6>
+        <div class="list-group">
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="stock" value="in">
+                In Stock
+            </label>
+            <label class="list-group-item border-0 p-0">
+                <input type="checkbox" class="form-check-input me-2" name="stock" value="out">
+                Out of Stock
+            </label>
+        </div>
+    </div>
+
+    <button class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+</div>
+

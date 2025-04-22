@@ -1,0 +1,172 @@
+@model X.PagedList.IPagedList<TechStore.Models.ShoppingCartItem>
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Web.Common
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "_LayoutUser";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4">Shopping Cart</h1>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+            <h3>Your cart is empty</h3>
+            <p class="text-muted">Add some products to your cart to continue shopping!</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">
+                <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                                    {
+                                        <img src="@item.Product.ImageUrl" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;" alt="@item.Product.Name">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px;">
+                                            <i class="fas fa-image fa-2x text-muted"></i>
+                                        </div>
+                                    }
+                                    <div>
+                                        <h6 class="mb-0">@item.Product?.Name</h6>
+                                        <small class="text-muted">@item.Product?.Description</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.Product?.DiscountedPrice.HasValue == true)
+                                {
+                                    <span class="text-danger">@item.Product.DiscountedPrice.Value.ToString("C")</span>
+                                    <span class="text-muted text-decoration-line-through ms-2">@item.Product.OriginalPrice.ToString("C")</span>
+                                }
+                                else
+                                {
+                                    <span>@item.Product?.OriginalPrice.ToString("C")</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="input-group" style="width: 120px;">
+                                    <input type="number" class="form-control quantity-input" 
+                                           value="@item.Quantity" min="1" 
+                                           data-cart-item-id="@item.CartItemID">
+                                    <button class="btn btn-outline-secondary update-quantity" type="button">
+                                        <i class="fas fa-sync"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                @{
+                                    var total = item.Product?.DiscountedPrice.HasValue == true
+                                        ? item.Product.DiscountedPrice.Value * item.Quantity
+                                        : item.Product?.OriginalPrice * item.Quantity;
+                                }
+                                <span class="fw-bold">@total?.ToString("C")</span>
+                            </td>
+                            <td>
+                                <form asp-action="RemoveFromCart" method="post" class="d-inline">
+                                    <input type="hidden" name="cartItemId" value="@item.CartItemID" />
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="mt-4">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+                        new PagedListRenderOptions
+                        {
+                            DisplayLinkToFirstPage =PagedListDisplayMode.Always,
+                            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                            DisplayPageCountAndCurrentLocation = true,
+                            MaximumPageNumbersToDisplay = 5
+                        })
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cart Summary</h5>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <span>@Model.Sum(item => (item.Product?.DiscountedPrice ?? item.Product?.OriginalPrice ?? 0) * item.Quantity).ToString("C")</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping:</span>
+                            <span>Free</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>Total:</span>
+                            <span>@Model.Sum(item => (item.Product?.DiscountedPrice ?? item.Product?.OriginalPrice ?? 0) * item.Quantity).ToString("C")</span>
+                        </div>
+                        <a href="@Url.Action("Checkout", "Order")" class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-shopping-bag me-2"></i>Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.update-quantity').click(function() {
+                var input = $(this).siblings('.quantity-input');
+                var cartItemId = input.data('cart-item-id');
+                var quantity = parseInt(input.val());
+
+                if (quantity < 1) {
+                    alert('Quantity must be at least 1');
+                    return;
+                }
+
+                $.post('@Url.Action("UpdateQuantity", "Cart")', {
+                    cartItemId: cartItemId,
+                    quantity: quantity
+                }, function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                });
+            });
+        });
+    </script>
+} 

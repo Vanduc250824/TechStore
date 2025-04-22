@@ -1,0 +1,53 @@
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<TechStore.Models.Promotion>
+
+@{
+    ViewData["Title"] = "Promotions";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Promotions</h1>
+
+    <div class="row">
+        @foreach (var promotion in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@promotion.Code</h5>
+                        <p class="card-text">
+                            <strong>Discount:</strong> @promotion.DiscountValue @(promotion.DiscountType == "Percentage" ? "%" : "$")<br>
+                            <strong>Valid:</strong> @promotion.StartDate.ToString("MM/dd/yyyy") - @promotion.EndDate.ToString("MM/dd/yyyy")
+                        </p>
+                        <p class="card-text">@promotion.Description</p>
+                        @if (promotion.IsActive)
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Inactive</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="pagination-container">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }),
+            new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayPageCountAndCurrentLocation = true,
+                MaximumPageNumbersToDisplay = 5
+            })
+    </div>
+</div>

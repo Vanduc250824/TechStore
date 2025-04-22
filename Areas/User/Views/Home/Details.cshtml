@@ -1,0 +1,224 @@
+@model TechStore.Models.Product
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Category" asp-route-id="@Model.CategoryID">@Model.Category?.Name</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="product-image-container">
+                <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/Images/zip.png" : Model.ImageUrl)" 
+                     class="product-image" alt="@Model.Name">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1 class="product-title mb-3">@Model.Name</h1>
+            <div class="product-rating mb-3">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <i class="bi bi-star@(i <= 4 ? "-fill" : "") text-warning"></i>
+                }
+                <span class="text-muted ms-2">(4 reviews)</span>
+            </div>
+            <div class="product-price mb-4">
+                @if (Model.DiscountedPrice.HasValue && Model.DiscountedPrice.Value < Model.OriginalPrice)
+                {
+                    var discount = Math.Round((1 - Model.DiscountedPrice.Value / Model.OriginalPrice) * 100);
+                    <div class="d-flex align-items-center">
+                        <span class="current-price me-3">@Model.DiscountedPrice.Value.ToString("N0") ₫</span>
+                        <span class="original-price me-2">@Model.OriginalPrice.ToString("N0") ₫</span>
+                        <span class="discount-badge">-@discount%</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="current-price">@Model.OriginalPrice.ToString("N0") ₫</div>
+                }
+            </div>
+            <div class="product-description mb-4">
+                <h5>Description</h5>
+                <p class="text-muted">@Model.Description</p>
+            </div>
+            <div class="product-info mb-4">
+                <div class="info-item">
+                    <span class="info-label">Stock:</span>
+                    <span class="info-value @(Model.StockQuantity > 0 ? "text-success" : "text-danger")">
+                        @(Model.StockQuantity > 0 ? "In Stock" : "Out of Stock")
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Category:</span>
+                    <a asp-controller="Products" asp-action="Category" asp-route-id="@Model.CategoryID" class="info-value text-decoration-none">
+                        @Model.Category?.Name
+                    </a>
+                </div>
+            </div>
+            <div class="product-actions">
+                <button class="btn btn-primary btn-lg w-100 mb-3" onclick="addToCart(@Model.ProductID)"
+                        @(Model.StockQuantity <= 0 ? "disabled" : "")>
+                    <i class="bi bi-cart-plus me-2"></i> Add To Cart
+                </button>
+                <button class="btn btn-outline-primary btn-lg w-100" onclick="addToWishlist(@Model.ProductID)">
+                    <i class="bi bi-heart me-2"></i> Add To Wishlist
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .product-image-container {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .product-image-container:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-image {
+        height: 400px;
+        object-fit: contain;
+        max-width: 100%;
+    }
+    
+    .product-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .product-rating {
+        font-size: 1.1rem;
+    }
+    
+    .product-price {
+        padding: 1rem 0;
+    }
+    
+    .current-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #dc3545;
+    }
+    
+    .original-price {
+        font-size: 1.2rem;
+        text-decoration: line-through;
+        color: #6c757d;
+    }
+    
+    .discount-badge {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    
+    .product-description {
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+    
+    .product-description h5 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .info-item {
+        display: flex;
+        align-items: center;
+    }
+    
+    .info-label {
+        font-weight: 600;
+        min-width: 100px;
+    }
+    
+    .info-value {
+        font-weight: 500;
+    }
+    
+    .product-actions .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .product-actions .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .product-actions .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.5rem 0;
+    }
+    
+    .breadcrumb-item a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+    
+    .breadcrumb-item.active {
+        color: #6c757d;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        function addToCart(productId) {
+            $.post('/User/Cart/AddToCart', { productId: productId, quantity: 1 })
+                .done(function (response) {
+                    if (response.success) {
+                        toastr.success('Product added to cart successfully!');
+                    } else {
+                        toastr.error(response.message || 'Failed to add product to cart.');
+                    }
+                })
+                .fail(function () {
+                    toastr.error('An error occurred while adding the product to cart.');
+                });
+        }
+
+        function addToWishlist(productId) {
+            $.post('/User/Wishlist/AddToWishlist', { productId: productId })
+                .done(function (response) {
+                    if (response.success) {
+                        toastr.success('Product added to wishlist successfully!');
+                    } else {
+                        toastr.error(response.message || 'Failed to add product to wishlist.');
+                    }
+                })
+                .fail(function () {
+                    toastr.error('An error occurred while adding the product to wishlist.');
+                });
+        }
+    </script>
+}
