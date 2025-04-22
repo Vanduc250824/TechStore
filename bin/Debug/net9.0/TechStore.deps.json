@@ -18,6 +18,7 @@
           "Microsoft.EntityFrameworkCore.Tools": "9.0.3",
           "Microsoft.Extensions.Hosting.WindowsServices": "9.0.3",
           "System.Data.SqlClient": "4.9.0",
+          "X.PagedList": "9.1.2",
           "X.PagedList.Mvc.Core": "8.0.7"
         },
         "runtime": {
@@ -2374,11 +2375,11 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "X.PagedList/8.0.7": {
+      "X.PagedList/9.1.2": {
         "runtime": {
-          "lib/netstandard2.0/X.PagedList.dll": {
-            "assemblyVersion": "8.0.7.0",
-            "fileVersion": "8.0.7.0"
+          "lib/net8.0/X.PagedList.dll": {
+            "assemblyVersion": "9.1.2.0",
+            "fileVersion": "9.1.2.0"
           }
         }
       },
@@ -2386,7 +2387,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
-          "X.PagedList": "8.0.7",
+          "X.PagedList": "9.1.2",
           "X.PagedList.Web.Common": "8.0.7"
         },
         "runtime": {
@@ -3955,12 +3956,12 @@
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
     },
-    "X.PagedList/8.0.7": {
+    "X.PagedList/9.1.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-eX1Wd5MrIehx9RaFWketo1LrZJDsEcJYx06LBQnaMNZX+CQgUS4A0z7GeaotkSZo6Cau6IGllj26XPpO8Lns4Q==",
-      "path": "x.pagedlist/8.0.7",
-      "hashPath": "x.pagedlist.8.0.7.nupkg.sha512"
+      "sha512": "sha512-qePK/lt+Y8PeQM9E/DkWY/AIyxDVEMX0XFCU5CfLP1+Y9SUThFyaY8/QgldOg9uOJLvse1i3oAQDJOrhb3usdw==",
+      "path": "x.pagedlist/9.1.2",
+      "hashPath": "x.pagedlist.9.1.2.nupkg.sha512"
     },
     "X.PagedList.Mvc.Core/8.0.7": {
       "type": "package",

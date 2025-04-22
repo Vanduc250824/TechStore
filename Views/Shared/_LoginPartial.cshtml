@@ -1,36 +1,72 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using TechStore.Models
+@using TechStore.Data
+@using Microsoft.EntityFrameworkCore
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+@inject ApplicationDbContext dbContext
 @{
-    string avatarUrl = Url.Content("~/Images/Avatars/Image_Default.png"); // mặc định
-
-    if (SignInManager.IsSignedIn(User))
+    string avatarUrl = Url.Content("~/Images/Avatars/Image_Default.png"); // Mặc định
+    int wishlistCount = 0;
+    int cartCount = 0;
+    ApplicationUser? user = null;
+    bool isUserSignedIn = SignInManager.IsSignedIn(User);
+    if (isUserSignedIn)
     {
-        var user = await UserManager.GetUserAsync(User);
-        if (user != null && !string.IsNullOrEmpty(user.ProfilePicture))
+        user = await UserManager.GetUserAsync(User) ?? new ApplicationUser();
+        if (user != null)
         {
-            avatarUrl = Url.Content(user.ProfilePicture);
+            // Kiểm tra ảnh đại diện của người dùng
+            avatarUrl = !string.IsNullOrEmpty(user.ProfilePicture) ? Url.Content(user.ProfilePicture) : avatarUrl;
+
+            try
+            {
+                // Lấy số lượng wishlist
+                var wishlist = await dbContext.Wishlists
+                .Include(w => w.WishlistItems)
+                .FirstOrDefaultAsync(w => w.UserID == user.Id);
+                wishlistCount = wishlist?.WishlistItems?.Count ?? 0;
+
+                // Lấy số lượng giỏ hàng
+                var cart = await dbContext.ShoppingCarts
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(c => c.UserID == user.Id);
+                cartCount = cart?.CartItems?.Sum(item => item.Quantity) ?? 0;
+            }
+            catch (Exception)
+            {
+                // Nếu có lỗi, chỉ hiển thị số lượng 0
+                wishlistCount = 0;
+                cartCount = 0;
+            }
         }
     }
 }
-
+@{
+    var returnUrl = Url.Action("Index", "Home", new { area = "User" });
+}
 <div class="d-flex align-items-center">
-    @if (SignInManager.IsSignedIn(User))
+    @if (isUserSignedIn)
     {
         <!-- Nút Search -->
-        <button id="btnShowSearchBar" class="btn btn-link p-1 me-2">
+        <button id="btnShowSearchBar" class="btn btn-link p-1 me-2" onclick="toggleSearchBar()">
             <img src="~/Images/search.png" alt="Search" width="20" height="20" />
         </button>
 
         <!-- Nút Close -->
-        <button id="btnCloseSearchBar" class="btn btn-link p-1 d-none me-2">
+        <button id="btnCloseSearchBar" class="btn btn-link p-1 d-none me-2" onclick="toggleSearchBar()">
             <img src="~/Images/close.png" alt="Close" width="20" height="20" />
         </button>
 
-        <!-- Giỏ hàng -->
-        <a href="@Url.Action("Cart", "Shopping")" class="position-relative mx-2">
+        <!-- Shopping Cart -->
+        <a href="@Url.Action("Index", "Cart")" class="position-relative mx-2">
             <img src="~/Images/shopping-cart.png" alt="Cart" width="24" height="24" />
+            @if (cartCount > 0)
+            {
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    @cartCount
+                </span>
+            }
         </a>
 
         <!-- Avatar + Logout -->
@@ -40,32 +76,54 @@
                 <img src="@avatarUrl" alt="User" class="rounded-circle" style="width: 32px; height: 32px;" />
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" href="/Manage/Index">My Account</a></li>
                 <li>
-                    <a class="dropdown-item" href="/Wishlist">My Wish List</a>
-                    <span></span>
+                    <a class="dropdown-item" asp-area="User" asp-controller="Account" asp-action="Index" title="Manage">
+                        <i class="fas fa-user"></i> My Account
+                    </a>
                 </li>
-                <li><a class="dropdown-item" href="/Compare">Compare (0)</a></li>
                 <li>
-                    <form asp-controller="Account" asp-action="Logout" method="post">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="dropdown-item text-start w-100">Logout</button>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Wishlist", new { area = "User" })">
+                        <i class="fas fa-heart"></i> My Wish List
+                        @if (wishlistCount > 0)
+                        {
+                            <span class="badge bg-danger ms-2">@wishlistCount</span>
+                        }
+                    </a>
+                </li>
+                <li><a class="dropdown-item" href="/Compare">Compare</a></li>
+                <li>
+                    <form id="logoutForm" asp-area="User" asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
                     </form>
                 </li>
             </ul>
         </div>
-
     }
     else
     {
         <!-- Nếu chưa đăng nhập -->
         <ul class="navbar-nav d-flex flex-row align-items-center mb-0">
             <li class="nav-item mx-2">
-                <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="Register">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
             </li>
             <li class="nav-item mx-2">
-                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="Login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
             </li>
         </ul>
     }
 </div>
+
+<script>
+    function toggleSearchBar() {
+        const searchButton = document.getElementById('btnShowSearchBar');
+        const closeButton = document.getElementById('btnCloseSearchBar');
+        searchButton.classList.toggle('d-none');
+        closeButton.classList.toggle('d-none');
+    }
+</script>

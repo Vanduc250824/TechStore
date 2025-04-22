@@ -1,0 +1,12 @@
+@model TechStore.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Delete Account";
+    Layout = "_Layout";
+}
+
+<td>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+    </form>
+</td>

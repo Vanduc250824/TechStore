@@ -1,0 +1,137 @@
+@model TechStore.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutUser";
+}
+
+<!-- Add Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+
+<nav class="my-3">
+    <span>@Html.Raw(ViewBag.Breadcrumb)</span>
+</nav>
+
+<h2>Create An Account</h2>
+
+<div class="d-flex justify-content-center align-items-center p-5">
+    <div class="w-75 bg-info p-4 rounded">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.FullName, new { @class = "mb-2 fw-bold" })
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control w-100", placeholder = "Full Name", required = "required" })
+                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.Email, new { @class = "mb-2 fw-bold" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control w-100", placeholder = "Email", type = "email", required = "required" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.Password, new { @class = "mb-2 fw-bold" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control w-100", placeholder = "Password", required = "required" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "mb-2 fw-bold" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control w-100", placeholder = "Confirm Password", required = "required" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.Phone, new { @class = "mb-2 fw-bold" })
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control w-100", placeholder = "Tel", type = "tel" })
+                @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="p-2 mb-3">
+                @Html.LabelFor(m => m.Address, new { @class = "mb-2 fw-bold" })
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control w-100", placeholder = "Address" })
+                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="px-4 py-2 form-control btn btn-primary">Create Account</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- Add Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        // Toastr configuration
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        // Show messages from TempData if they exist
+        @if (TempData["Success"] != null)
+        {
+            <text>
+                toastr.success('@TempData["Success"]');
+            </text>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <text>
+                toastr.error('@TempData["Error"]');
+            </text>
+        }
+
+        // Handle form submission
+        $(document).ready(function() {
+            $("#registerForm").on('submit', function(e) {
+                e.preventDefault();
+                var form = $(this);
+                
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success('Đăng ký tài khoản thành công!');
+                            setTimeout(function() {
+                                window.location.href = response.redirectUrl || '/Account/Login';
+                            }, 1500);
+                        } else {
+                            toastr.error(response.message || 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin!');
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            var errors = xhr.responseJSON;
+                            if (errors) {
+                                Object.keys(errors).forEach(function(key) {
+                                    toastr.error(errors[key]);
+                                });
+                            }
+                        } else {
+                            toastr.error('Có lỗi xảy ra. Vui lòng thử lại sau!');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

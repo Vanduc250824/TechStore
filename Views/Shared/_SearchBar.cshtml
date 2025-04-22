@@ -1,12 +1,15 @@
-<div class="d-flex align-items-center justify-content-end">
+<div class="d-flex align-items-center justify-content-end position-relative">
     <!-- Form to wrap the input and icon -->
-    <form class="d-flex position-relative" style="width: auto;">
+    <form class="d-flex" style="width: auto;" onsubmit="handleSearch(event)">
         <!-- Input with padding on the right to accommodate the icon -->
         <div class="position-relative">
             <input type="text" 
+                   id="searchInput"
                    class="form-control px-4 py-2 rounded-pill bg-info-subtle" 
                    placeholder="Search entire store here..." 
-                   style="padding-right: 48px; width: 1035px;" />
+                   style="padding-right: 48px; width: 1035px;"
+                   autocomplete="off"
+                   oninput="handleSearchInput(this.value)" />
 
             <!-- Search icon positioned inside the input -->
             <img src="~/Images/search.png" 
@@ -17,4 +20,169 @@
                  style="right: 15px; top: 50%; transform: translateY(-50%);" />
         </div>
     </form>
+
+    <!-- Search results dropdown - Positioned directly below the search bar -->
+    <div id="searchResults" class="position-absolute bg-white shadow-lg rounded-3" 
+         style="width: 1035px; max-height: 400px; overflow-y: auto; display: none; z-index: 1000; top: 100%; left: 0; margin-top: 10px;">
+        <div class="p-2">
+            <div id="searchResultsContent"></div>
+            <div id="searchLoading" class="text-center py-3" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div id="noResults" class="text-center py-3" style="display: none;">
+                <i class="fas fa-search fa-2x text-muted mb-2"></i>
+                <p class="text-muted mb-0">No products found</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    #searchResults {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        text-decoration: none;
+        color: inherit;
+        transition: background-color 0.2s;
+    }
+    
+    .search-result-item:last-child {
+        border-bottom: none;
+    }
+    
+    .search-result-item:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .search-result-image {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-right: 15px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        padding: 5px;
+    }
+    
+    .search-result-info {
+        flex: 1;
+    }
+    
+    .search-result-name {
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #333;
+    }
+    
+    .search-result-price {
+        font-weight: 600;
+        color: #dc3545;
+    }
+    
+    .search-result-category {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+</style>
+
+<script>
+    let searchTimeout;
+    const searchResults = document.getElementById('searchResults');
+    const searchResultsContent = document.getElementById('searchResultsContent');
+    const searchLoading = document.getElementById('searchLoading');
+    const noResults = document.getElementById('noResults');
+    const searchInput = document.getElementById('searchInput');
+
+    function handleSearch(event) {
+        event.preventDefault();
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm) {
+            window.location.href = `/Products/Search?q=${encodeURIComponent(searchTerm)}`;
+        }
+    }
+
+    function handleSearchInput(value) {
+        clearTimeout(searchTimeout);
+        const searchTerm = value.trim();
+        
+        if (searchTerm.length < 1) {
+            searchResults.style.display = 'none';
+            return;
+        }
+
+        searchTimeout = setTimeout(() => {
+            searchLoading.style.display = 'block';
+            searchResultsContent.innerHTML = '';
+            noResults.style.display = 'none';
+            searchResults.style.display = 'block';
+
+            fetch(`/Products/SearchProducts?q=${encodeURIComponent(searchTerm)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    searchLoading.style.display = 'none';
+                    
+                    if (!data || data.length === 0) {
+                        noResults.style.display = 'block';
+                        return;
+                    }
+
+                    data.forEach(product => {
+                        const resultItem = document.createElement('a');
+                        resultItem.href = `/Products/Details/${product.productID}`;
+                        resultItem.className = 'search-result-item d-flex align-items-center p-3 text-decoration-none border-bottom';
+                        
+                        const imageUrl = product.imageUrl || '/Images/zip.png';
+                        const price = product.discountedPrice || product.originalPrice;
+                        const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(price);
+                        
+                        resultItem.innerHTML = `
+                            <img src="${imageUrl}" alt="${product.name}" class="search-result-image me-3" style="width: 50px; height: 50px; object-fit: contain;">
+                            <div class="search-result-info">
+                                <div class="search-result-name fw-medium mb-1">${product.name}</div>
+                                <div class="search-result-price text-danger fw-bold">${formattedPrice}</div>
+                                <div class="search-result-category text-muted small">${product.categoryName}</div>
+                            </div>
+                        `;
+                        
+                        searchResultsContent.appendChild(resultItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    searchLoading.style.display = 'none';
+                    noResults.style.display = 'block';
+                });
+        }, 300);
+    }
+
+    // Close search results when clicking outside
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.querySelector('.position-relative');
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // Handle keyboard navigation
+    searchInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            searchResults.style.display = 'none';
+        }
+    });
+</script>

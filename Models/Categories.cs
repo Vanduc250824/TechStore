@@ -1,15 +1,18 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
+using TechStore.Models;
 
 namespace TechStore.Models
 {
-    public class Category {
-        public int CategoryID {get; set;}
+    public class Category
+    {
+        [Key]
+        public int CategoryID { get; set; }
 
         [Required]
-        public required string Name { get; set; }
+        [StringLength(100)]
+        public string Name { get; set; } = string.Empty;
 
-        public List<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 }
